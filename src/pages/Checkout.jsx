@@ -63,21 +63,27 @@ const Checkout = () => {
     }
   };
 
+  const [completedOrder, setCompletedOrder] = useState(null);
+
   const handlePay = () => {
     setIsProcessing(true);
     setTimeout(() => {
-      createOrder({
+      const order = createOrder({
         method: method,
         status: 'completed',
         customerName: currentUser?.name || 'Guest Commander',
         customerEmail: currentUser?.email || 'guest@saturn.com'
       });
+      setCompletedOrder(order);
       setIsProcessing(false);
       setIsCompleted(true);
     }, 2500);
   };
 
-  if (isCompleted) {
+  if (isCompleted && completedOrder) {
+    const receiptUrl = `https://e-commerce-final-project-mu.vercel.app/receipt?id=${completedOrder.id}&total=${completedOrder.total}&date=${encodeURIComponent(completedOrder.date)}&method=${completedOrder.method}&customer=${encodeURIComponent(completedOrder.customerName)}&items=${encodeURIComponent(JSON.stringify(completedOrder.items))}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(receiptUrl)}`;
+
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center px-4">
         <motion.div
@@ -88,8 +94,17 @@ const Checkout = () => {
           <CheckCircle2 className="w-12 h-12 text-saturn-accent" />
         </motion.div>
         <h2 className="text-4xl font-bold font-rajdhani mb-2">PAYMENT SUCCESSFUL</h2>
-        <p className="text-white/60 mb-8 max-w-md">Your order has been confirmed. You will receive an email with your game keys shortly.</p>
-        <button className="btn-primary" onClick={() => window.location.href = '/'}>Return Home</button>
+        <p className="text-white/60 mb-8 max-w-md">Your order has been confirmed. Scan the QR below to view your receipt on any device.</p>
+        
+        <div className="bg-white p-4 rounded-xl mb-4">
+          <img src={qrUrl} alt="Receipt QR" className="w-40 h-40" />
+        </div>
+        <p className="text-[10px] text-white/30 uppercase tracking-widest mb-8">Scan QR to open receipt on your phone</p>
+        
+        <div className="flex gap-4">
+          <button className="btn-primary" onClick={() => navigate('/my-orders')}>View My Orders</button>
+          <button className="px-6 py-3 border border-white/10 rounded-lg text-white/60 hover:text-white hover:border-white/30 transition-all text-sm font-bold" onClick={() => window.location.href = '/'}>Return Home</button>
+        </div>
       </div>
     );
   }

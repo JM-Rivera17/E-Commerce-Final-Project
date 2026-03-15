@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Wishlist from './pages/Wishlist';
 import About from './pages/About';
 import MyOrders from './pages/MyOrders';
+import Receipt from './pages/Receipt';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
 import { StoreProvider } from './context/StoreContext';
@@ -31,6 +32,7 @@ function App() {
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/about" element={<About />} />
               <Route path="/my-orders" element={<MyOrders />} />
+              <Route path="/receipt" element={<Receipt />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<Admin />} />
               {/* Optional: Add a 404 page */}
