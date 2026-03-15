@@ -11,11 +11,11 @@ const Login = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const result = userLogin(email, password);
+    const result = await userLogin(email, password);
     if (result.success) {
       navigate('/');
     } else {

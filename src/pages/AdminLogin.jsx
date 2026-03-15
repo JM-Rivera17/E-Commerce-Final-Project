@@ -11,11 +11,11 @@ const AdminLogin = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const result = adminLogin(email, password);
+    const result = await adminLogin(email, password);
     if (result.success) {
       navigate('/admin');
     } else {

@@ -15,7 +15,7 @@ const Register = () => {
   });
   const [error, setError] = React.useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -23,7 +23,7 @@ const Register = () => {
       return setError('Passwords do not match');
     }
 
-    const result = register({
+    const result = await register({
       name: formData.name,
       email: formData.email,
       password: formData.password

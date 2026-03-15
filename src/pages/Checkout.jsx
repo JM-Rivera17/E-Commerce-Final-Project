@@ -65,19 +65,17 @@ const Checkout = () => {
 
   const [completedOrder, setCompletedOrder] = useState(null);
 
-  const handlePay = () => {
+  const handlePay = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      const order = createOrder({
-        method: method,
-        status: 'completed',
-        customerName: currentUser?.name || 'Guest Commander',
-        customerEmail: currentUser?.email || 'guest@saturn.com'
-      });
-      setCompletedOrder(order);
-      setIsProcessing(false);
-      setIsCompleted(true);
-    }, 2500);
+    const order = await createOrder({
+      method: method,
+      status: 'completed',
+      customerName: currentUser?.name || 'Guest Commander',
+      customerEmail: currentUser?.email || 'guest@saturn.com'
+    });
+    setCompletedOrder(order);
+    setIsProcessing(false);
+    setIsCompleted(true);
   };
 
   if (isCompleted && completedOrder) {
