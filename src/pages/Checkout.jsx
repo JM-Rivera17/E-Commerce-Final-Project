@@ -160,7 +160,7 @@ const Checkout = () => {
                   >
                     <div className="bg-white p-4 rounded-xl mb-4 relative group">
                       <img 
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SATURN-ORDER-12345" 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://e-commerce-final-project-mu.vercel.app/checkout`}
                         alt="QR Code"
                         className="w-40 h-40 filter contrast-125"
                       />
@@ -168,11 +168,18 @@ const Checkout = () => {
                         <span className="text-white text-xs font-bold">SCAN TO PAY</span>
                       </div>
                     </div>
-                    <p className="text-sm text-white/70 mb-2">Scan this QR with GCash, Maya, or any Banking App</p>
-                    <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full text-[10px] font-mono text-white/40">
+                    <p className="text-sm text-white/70 mb-3">Scan this QR with GCash, Maya, or any Banking App</p>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText('SAT-9942-PR32');
+                        alert('Reference number copied!');
+                      }}
+                      className="flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 rounded-full text-[10px] font-mono text-white/40 hover:text-white"
+                    >
                       REFERENCE: SAT-9942-PR32
-                      <Copy className="w-3 h-3 cursor-pointer hover:text-white" />
-                    </div>
+                      <Copy className="w-3 h-3" />
+                    </button>
+                    <p className="text-[10px] text-white/20 mt-3 uppercase tracking-widest">Scanning will open the payment page on your device</p>
                   </motion.div>
                 )}
 
