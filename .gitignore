@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 /src/generated/prisma
+
+# Environment variables (DO NOT commit these)
+.env
+.env.local
+.env.production
