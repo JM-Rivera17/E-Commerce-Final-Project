@@ -24,6 +24,13 @@ const Navbar = () => {
     { name: 'ABOUT', path: '/about' },
   ];
 
+  const userNavLinks = [
+    ...navLinks,
+    { name: 'MY ORDERS', path: '/my-orders' },
+  ];
+
+  const displayLinks = currentUser ? userNavLinks : navLinks;
+
   return (
     <nav className="bg-saturn-dark/80 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,7 +42,7 @@ const Navbar = () => {
             </Link>
 
             <div className="hidden md:flex items-center gap-6">
-              {location.pathname !== '/admin' && navLinks.map((link) => (
+              {location.pathname !== '/admin' && displayLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
@@ -116,7 +123,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-saturn-card border-b border-white/10 px-4 pt-2 pb-6 flex flex-col gap-4">
-          {navLinks.map((link) => (
+          {displayLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
