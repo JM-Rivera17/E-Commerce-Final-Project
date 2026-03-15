@@ -4,7 +4,7 @@ import { QrCode, CreditCard, Wallet, CheckCircle2, Copy, AlertCircle } from 'luc
 import { useStore } from '../context/StoreContext';
 
 const Checkout = () => {
-  const { cart, clearCart } = useStore();
+  const { cart, clearCart, createOrder, currentUser } = useStore();
   const [method, setMethod] = useState('qr');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -15,9 +15,16 @@ const Checkout = () => {
     setIsProcessing(true);
     // Simulate payment processing
     setTimeout(() => {
+      // Record order in database
+      createOrder({
+        method: method,
+        status: 'completed',
+        customerName: currentUser?.name || 'Guest Commander',
+        customerEmail: currentUser?.email || 'guest@saturn.com'
+      });
+      
       setIsProcessing(false);
       setIsCompleted(true);
-      clearCart();
     }, 2500);
   };
 

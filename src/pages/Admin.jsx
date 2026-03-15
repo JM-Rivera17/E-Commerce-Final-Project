@@ -338,12 +338,59 @@ const Admin = () => {
         )}
 
         {activeTab === 'orders' && (
-          <div className="text-center py-32 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 shadow-inner">
-             <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ShoppingBag className="w-10 h-10 text-white/10" />
-             </div>
-             <h3 className="text-xl font-bold font-rajdhani text-white/40 uppercase tracking-tighter">No space traffic recorded</h3>
-             <p className="text-white/20 text-xs mt-2 font-bold tracking-widest uppercase">The commerce frequency is quiet</p>
+          <div className="glass-card overflow-hidden border-white/5 shadow-2xl">
+            {orders.length === 0 ? (
+              <div className="text-center py-32 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 shadow-inner">
+                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <ShoppingBag className="w-10 h-10 text-white/10" />
+                </div>
+                <h3 className="text-xl font-bold font-rajdhani text-white/40 uppercase tracking-tighter">No space traffic recorded</h3>
+                <p className="text-white/20 text-xs mt-2 font-bold tracking-widest uppercase">The commerce frequency is quiet</p>
+              </div>
+            ) : (
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-white/5 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] leading-none">
+                  <tr>
+                    <th className="px-8 py-5">Order ID</th>
+                    <th className="px-8 py-5">Commander / Buyer</th>
+                    <th className="px-8 py-5">Intel / Asset Acquired</th>
+                    <th className="px-8 py-5">Method</th>
+                    <th className="px-8 py-5 text-right">Total Transferred</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {orders.map(order => (
+                    <tr key={order.id} className="text-sm hover:bg-white/[0.02] transition-colors group">
+                      <td className="px-8 py-5 font-mono text-xs text-white/40 group-hover:text-white transition-colors">
+                        #SAT-{order.id.toString().slice(-6)}
+                      </td>
+                      <td className="px-8 py-5">
+                        <div className="font-bold text-white">{order.customerName}</div>
+                        <div className="text-[10px] text-white/40">{order.customerEmail}</div>
+                      </td>
+                      <td className="px-8 py-5">
+                        <ul className="text-xs text-white/60 space-y-1">
+                          {order.items.map((item, index) => (
+                            <li key={index} className="flex items-center gap-2">
+                              <div className="w-1 h-1 bg-saturn-accent rounded-full"></div>
+                              {item.title}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="px-8 py-5">
+                        <span className="px-3 py-1.5 rounded-sm text-[10px] font-black uppercase tracking-widest bg-white/5 text-saturn-accent border border-saturn-accent/20">
+                          {order.method}
+                        </span>
+                      </td>
+                      <td className="px-8 py-5 text-right font-bold text-lg text-saturn-accent">
+                        ₱{order.total.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
       </div>
