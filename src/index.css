@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #0a0b10;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-saturn-dark text-white antialiased overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-rajdhani;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2 bg-saturn-accent text-black font-semibold rounded hover:bg-opacity-90 transition-all duration-300 transform active:scale-95;
+  }
+
+  .btn-outline {
+    @apply px-6 py-2 border border-white/20 text-white font-semibold rounded hover:bg-white/10 transition-all duration-300;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden;
+  }
+
+  .nav-link {
+    @apply text-white/70 hover:text-saturn-accent transition-colors font-rajdhani tracking-wider text-sm font-semibold;
+  }
+
+  .nav-link-active {
+    @apply text-saturn-accent;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-saturn-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20;
+}
