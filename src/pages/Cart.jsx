@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '../context/StoreContext';
 import { Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { cart, removeFromCart } = useStore();
+  const { cart, removeFromCart, currentUser } = useStore();
+  const navigate = useNavigate();
   const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+    }
+  }, [currentUser, navigate]);
+
+  if (!currentUser) return null;
 
   if (cart.length === 0) {
     return (

@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QrCode, CreditCard, Wallet, CheckCircle2, Copy, AlertCircle } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
   const { cart, clearCart, createOrder, currentUser } = useStore();
+  const navigate = useNavigate();
   const [method, setMethod] = useState('qr');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+    }
+  }, [currentUser, navigate]);
+
   const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  if (!currentUser) return null;
 
   const handlePay = () => {
     setIsProcessing(true);

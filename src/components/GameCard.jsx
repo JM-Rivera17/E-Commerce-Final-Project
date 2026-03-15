@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Info, Heart } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
 const GameCard = ({ game }) => {
-  const { addToCart, toggleWishlist, wishlist } = useStore();
+  const { addToCart, toggleWishlist, wishlist, currentUser } = useStore();
+  const navigate = useNavigate();
   const isWishlisted = wishlist.find(item => item.id === game.id);
 
   return (
@@ -25,6 +27,11 @@ const GameCard = ({ game }) => {
           <button 
             onClick={(e) => {
               e.stopPropagation();
+              if (!currentUser) {
+                alert("Please log in first before adding items to your cart.");
+                navigate('/login');
+                return;
+              }
               const added = addToCart(game);
               if (added) {
                 alert(`🚀 ${game.title} has been added to your cart!`);
